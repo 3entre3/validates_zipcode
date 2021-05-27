@@ -5,6 +5,11 @@ module ValidatesZipcode
 
     ZIPCODES_TRANSFORMATIONS = {
       AT: ->(z) { z.scan(/\d/).join },
+      BR: ->(z) {
+        digits = z.scan(/\d/)
+        digits.insert(5, '-') if digits.count > 5
+        digits.join
+      },
       CA: ->(z) { z.upcase.scan(WORD_CHAR_AND_DIGIT).insert(3, ' ').join },
       CZ: ->(z) { z.scan(/\d/).insert(3, ' ').join },
       DE: ->(z) { z.scan(/\d/).join.rjust(5, '0') },
